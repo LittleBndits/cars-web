@@ -5,24 +5,26 @@
     <!-- 导航 -->
     <Navbar />
     <!-- 地图 -->
-    <Map /> 
+    <Map @callbackComponent='callbackComponent' />
     <!-- Login -->
     <Login></Login>
     <!-- 会员 -->
     <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
-   
+
   </div>
 </template>
 
 <script>
-import Map from '../aMap/index'
-import Cars from '../cars/index'
-import Navbar from '@c/Navbar'
-import Login from './login'
+import Map from "../aMap/index";
+import Cars from "../cars/index";
+import Navbar from "@c/Navbar";
+import Login from "./login";
+// API
+import { GetParking } from '@/api/parking'
 export default {
-  name: 'Index',
+  name: "Index",
   components: {
     Map,
     Cars,
@@ -30,26 +32,43 @@ export default {
     Navbar
   },
   data() {
-    return {}
+    return {};
   },
   computed: {
     show() {
-      const rotuer = this.$route
-      return rotuer.name === 'Index' ? false : true
+      const rotuer = this.$route;
+      return rotuer.name === "Index" ? false : true;
     }
   },
   mounted() {
-    document.addEventListener('mouseup', e => {
-      const userCon = document.getElementById('children-view')
+    document.addEventListener("mouseup", e => {
+      const userCon = document.getElementById("children-view");
       if (userCon && !userCon.contains(e.target)) {
+        const routeName = this.$route.name;
+        if (routeName === "Index") {
+          return false;
+        }
         this.$router.push({
-          name: 'Index'
-        })
+          name: "Index"
+        });
       }
-    })
+    });
+  },
+  methods: {
+    /**地图初始化完成回调 */
+    callbackComponent(params) {
+      params.function && this[params.function]();
+    },
+    mapLoad() {
+      console.log(1212);
+      GetParking().then(res=>{
+      console.log("mapLoad -> res", res)
+        
+      })
+    }
   },
   watch: {}
-}
+};
 </script>
 
 <style lang="scss">
