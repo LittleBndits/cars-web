@@ -115,7 +115,7 @@ export default {
   props: {
     height: {
       type: String,
-      default: '257px'
+      default: '750px'
     }
   }
 }
