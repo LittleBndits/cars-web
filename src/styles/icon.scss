@@ -1,0 +1,46 @@
+//获取类名以icon 开头的i标签
+i[class^="icon"] {
+  border-radius: 100px;
+  display: inline-block;
+  background-color: $color-main;
+  background-repeat: no-repeat;
+}
+.icon-w-44 {
+  width: 44px;
+  height: 44px;
+}
+.icon-help {
+  background-image: url(~@/assets/images/icon/icon-help.png);
+}
+.icon-location {
+  background-image: url(~@/assets/images/icon/icon-location.png);
+}
+.icon-search {
+  background-image: url(~@/assets/images/icon/icon-search.png);
+}
+.icon-user {
+  background-image: url(~@/assets/images/icon/icon-user.png);
+}
+.icon-router-link-001 {
+  background-image: url(~@/assets/images/icon/icon-router-link-001.png);
+}
+.icon-router-link-002 {
+  background-image: url(~@/assets/images/icon/icon-router-link-002.png);
+}
+.icon-router-link-003 {
+  background-image: url(~@/assets/images/icon/icon-router-link-003.png);
+}
+.icon-router-link-004 {
+  background-image: url(~@/assets/images/icon/icon-router-link-004.png);
+}
+.icon-router-link-005 {
+  background-image: url(~@/assets/images/icon/icon-router-link-005.png);
+}
+.iconBtn {
+  width: 240px !important;
+  height: 84px !important;
+  line-height: 84px;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 300;
+}

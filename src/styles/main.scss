@@ -1,0 +1,86 @@
+@import "./sassConfig.scss";
+@import "./normalize.scss";
+@import "./ui.scss";
+@import "./icon.scss";
+
+/*color*/
+.color-main {
+  color: $color-main;
+}
+.color-blue {
+  color: $color-blue;
+}
+/*aling*/
+.text-l {
+  text-align: left;
+}
+.text-r {
+  text-align: right;
+}
+.text-c {
+  text-align: center;
+}
+
+/*float*/
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+/**font-size*/
+.font24 {
+  font-size: 24px;
+}
+/**position*/
+.p-r {
+  position: relative;
+}
+.p-a {
+  position: absolute;
+}
+.p-fd {
+  position: fixed;
+}
+
+/*清除浮动*/
+.clearfix {
+  @extend %clearfix;
+}
+.user-container {
+  padding: 0 30px;
+}
+
+/*group-links*/
+.group-links {
+  a {
+    position: relative;
+    display: block;
+    color: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0 -30px;
+    height: 64px;
+    font-size: 15px;
+    line-height: 64px;
+    padding-left: 30px;
+    .icon {
+      margin: 0 16px -10px 0;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .arrow:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    line-height: 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    margin-top: -5px;
+    @include webkit(box-sizing, border-box);
+    @include webkit(transform, rotate(45deg));
+  }
+}

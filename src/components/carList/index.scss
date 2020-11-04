@@ -1,0 +1,228 @@
+@import "../../styles/icon.scss";
+
+.carList {
+  //  @extend %clearfix
+  position: relative;
+}
+.car-item {
+  height: 257px;
+  background-color: #fff;
+  padding: 30px 30px 0 30px;
+  border-radius: 24px;
+  @include webkit(box-shadow, 0 0 18px 0 rgba(0, 0, 0, 0.2));
+  @include webkit(box-sizing, border-box);
+  margin: auto;
+  header {
+    display: flex;
+    height: 34px;
+    align-items: center;
+    justify-content: space-between;
+    .car-logo {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      span {
+        margin-left: 10px;
+      }
+    }
+    .attr {
+      opacity: 0.5;
+    }
+  }
+  .car-content {
+    position: relative;
+    margin: 10px 0 7px;
+    @extend %clearfix;
+    img {
+      float: right;
+    }
+    .inof {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .car-Power {
+      padding-top: 10px;
+      ul {
+        display: inline-block;
+      }
+      li {
+        width: 7px;
+        height: 24px;
+        background-color: #e1e1e1;
+        border-radius: 100px;
+        margin-right: 3px;
+        display: inline-block;
+      }
+
+      @for $i from 1 through 10 {
+        .active-li-#{$i} {
+          li:nth-child(-n + #{$i}) {
+            @include webkitA(
+              background,
+              linear-gradient(to bottom, #0a9dfc, #0083de)
+            );
+          }
+        }
+      }
+    }
+  }
+  .car-km {
+    display: inline-block;
+    padding: 0 5px;
+    strong {
+      font-size: 26px;
+      margin: 0 5px;
+    }
+    span {
+      position: relative;
+      top: -5px;
+    }
+  }
+  .parking-link {
+    position: relative;
+    border-top: 1px solid #e1e1e1;
+    display: block;
+    color: $color-main;
+    opacity: 0.8;
+    line-height: 53px;
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -8px;
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid #e1e1e1;
+      border-top: 1px solid #e1e1e1;
+      @include webkit(transform, rotate(45deg));
+    }
+  }
+}
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+// 汽车详情
+.car-item-details {
+  display:none;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 30px;
+  .column {
+    padding: 20px 0 26px 0;
+    border-bottom: 1px solid #e1e1e1;
+    position: relative;
+    margin-bottom: 19px;
+    .close {
+      position: absolute;
+      right: 0;
+      top: 25px;
+      width: 26px;
+      height: 26px;
+      display: block;
+      cursor: pointer;
+      // background-color: #000;
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 20px;
+        margin-left: -1px;
+        margin-top: -10px;
+        border-left: 2px solid #999c9f;
+      }
+      &:before {
+        @include webkit(transform, rotate(45deg));
+      }
+      &:after {
+        @include webkit(transform, rotate(-45deg));
+      }
+    }
+  }
+  .iconBtn {
+    position: absolute;
+    left: 50%;
+    margin-left: -120px;
+    bottom: -43px;
+  }
+}
+.car-electric-box {
+  margin-top: 17px;
+  padding: 15px;
+  border-radius: 100px;
+  @include webkit(box-shadow, 0 0 10px 0 rgba(0, 0, 0, 0.1));
+  .e-high {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 100px;
+    background-color: $color-blue;
+  }
+  .e-bg {
+    display: block;
+    height: 8px;
+    border-radius: 100px;
+    background-color: #e1e1e1;
+  }
+}
+.info {
+  padding: 32px 0 28px;
+}
+.car-type-list {
+  li {
+    height: 43px;
+    padding: 0 17px 0 20px;
+    background-color: #f3f3f3;
+    border-color: #f3f3f3;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 43px;
+    margin-bottom: 15px;
+    &.current {
+      border-color: $color-blue;
+      background-color: #fff;
+    }
+    .type-name {
+      float: left;
+    }
+    .type-price {
+      float: right;
+    }
+  }
+}
+.clause-dec {
+  margin-top: 30px;
+  i {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 100px;
+    &.current {
+      background-color: $color-main;
+    }
+    &:before {
+      content: "";
+      width: 8px;
+      height: 4px;
+      display: block;
+      border-left: 2px solid #e1e1e1;
+      border-bottom: 2px solid #e1e1e1;
+      margin: 6px 0 0px 5px;
+      @include webkit(transform, rotate(-45deg));
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.user-info {
+  display: flex;
+  padding: 80px 0 80px 10px;
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    border: 6px solid #33393e;
+    margin-right: 23px;
+  }
+  .meta {
+    flex: 1;
+    h4 {
+      line-height: 43px;
+      color: #909090;
+      font-size: 16px;
+    }
+    span {
+      height: 27px;
+      padding: 0 17px;
+      border-radius: 100px;
+      background-color: $color-blue;
+      display: inline-block;
+      line-height: 27px;
+      font-size: 14px;
+    }
+  }
+}
+.exitBtn {
+  width: 165px;
+  height: 58px;
+  background-color: #2d333b;
+  line-height: 58px;
+  font-size: 18px;
+  border-radius: 100px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  margin-left: -82.5px;
+  bottom: 60px;
+}

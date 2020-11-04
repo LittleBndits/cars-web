@@ -1,0 +1,29 @@
+$color-main: #3d4249;
+$color-blue: #0191fc;
+
+@mixin webkit($type, $value) {
+  -webkit-#{$type}: $value;
+  -moz-#{$type}: $value;
+  -ms-#{$type}: $value;
+  -o-#{$type}: $value;
+  #{$type}: $value;
+}
+@mixin webkitA($type, $value) {
+  -webkit-#{$type}: #{$value};
+  -moz-#{$type}: #{$value};
+  -ms-#{$type}: #{$value};
+  -o-#{$type}: #{$value};
+  #{$type}: #{$value};
+}
+/* clearfix */
+%clearfix {
+  &:after {
+      clear: both;
+      content: '.';
+      display: block;
+      height: 0;
+      line-height: 0;
+      overflow: hidden;
+  }
+  *height: 1%;
+}

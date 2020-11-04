@@ -1,0 +1,32 @@
+diff a/web/src/api/login.js b/web/src/api/login.js	(rejected hunks)
+@@ -0,0 +1,29 @@
++/*
++ * @Author: Qiu-Long.Chan 
++ * @Date: 2020-11-04 10:49:00 
++ * @Last Modified by:   Qiu-Long.Chan 
++ * @Last Modified time: 2020-11-04 10:49:00 
++ */
++
++import service from "../utils/request";
++/**
++ * 获取验证码
++ */
++export function GetCode(data){
++    return service.request({
++        method: "post",
++        url: `${process.env.VUE_APP_API_LOGIN}/getCode/`,
++        data
++    })
++}
++
++/**
++ * 登录
++ */
++export function Login(data){
++    return service.request({
++        method: "post",
++        url: `${process.env.VUE_APP_API_LOGIN}/login/`,
++        data
++    })
++}
+\ No newline at end of file
