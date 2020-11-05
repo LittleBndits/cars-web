@@ -5,9 +5,9 @@
     <!-- 导航 -->
     <Navbar />
     <!-- 地图 -->
-    <Map @callbackComponent='callbackComponent' />
+    <Map ref="map" @callbackComponent="callbackComponent" />
     <!-- Login -->
-    <Login></Login>
+    <Login />
     <!-- 会员 -->
     <div id="children-view" :class="{ open: show }">
       <router-view />
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-import Map from "../aMap/index";
-import Cars from "../cars/index";
-import Navbar from "@c/Navbar";
-import Login from "./login";
+import Map from '../aMap/index'
+import Cars from '../cars/index'
+import Navbar from '@c/Navbar'
+import Login from './login'
 // API
 import { GetParking } from '@/api/parking'
 export default {
-  name: "Index",
+  name: 'Index',
   components: {
     Map,
     Cars,
@@ -32,43 +32,69 @@ export default {
     Navbar
   },
   data() {
-    return {};
+    return {}
   },
   computed: {
     show() {
-      const rotuer = this.$route;
-      return rotuer.name === "Index" ? false : true;
+      const rotuerName = this.$route.name
+      return rotuerName !== 'Index'
     }
   },
+  watch: {},
   mounted() {
-    document.addEventListener("mouseup", e => {
-      const userCon = document.getElementById("children-view");
+    /* 监听页面点击 */
+    document.addEventListener('mouseup', e => {
+      const userCon = document.getElementById('children-view')
       if (userCon && !userCon.contains(e.target)) {
-        const routeName = this.$route.name;
-        if (routeName === "Index") {
-          return false;
+        const routeName = this.$route.name
+        if (routeName === 'Index') {
+          return false
         }
         this.$router.push({
-          name: "Index"
-        });
+          name: 'Index'
+        })
       }
-    });
+    })
   },
   methods: {
-    /**地图初始化完成回调 */
+    /** 地图初始化完成回调 */
     callbackComponent(params) {
-      params.function && this[params.function]();
+      params.function && this[params.function]()
     },
     mapLoad() {
-      console.log(1212);
-      GetParking().then(res=>{
-      console.log("mapLoad -> res", res)
-        
-      })
+      /* 地图加载完成后--执行的方法 */
+      this.getparking() // 查询停车场列表
+    },
+    /* 查询停车场列表 */
+    getparking() {
+      GetParking()
+        .then(result => {
+          const resData = result.data.data
+          resData.forEach(item => {
+            item.position = item.lnglat.split(',')
+            item.offset = [-29, -59]
+            item.offsetTxt = [-29, -59]
+            item.content =
+              '<img src="' +
+              require('@/assets/images/parking-location.png') +
+              '" >'
+            item.contentTxt = `<div  class="carsNum">${item.carsNumber}</div>`
+            item.events = {
+              click: e => this.navigation(e)
+            }
+          })
+          /* 添加停车场 覆盖物 */
+          this.$refs.map.markerPinking(resData)
+        })
+        .catch(() => {})
+    },
+    /* 显示导航规划 */
+    navigation(e) {
+      const curr_click_data = e.target.getExtData()
+      this.$refs.map.navigation(curr_click_data)
     }
-  },
-  watch: {}
-};
+  }
+}
 </script>
 
 <style lang="scss">
@@ -86,5 +112,13 @@ export default {
   &.open {
     right: 0;
   }
+}
+.carsNum {
+  color: #fff;
+  font-weight: bold;
+  width: 59px;
+  height: 59px;
+  line-height: 52px;
+  text-align: center;
 }
 </style>
