@@ -1,0 +1,33 @@
+.infonBox {
+    min-width: 177px;
+    height: 48px;
+    border-radius: 48px;
+    line-height: 48px;
+    text-align: center;
+    color: #fff;
+    opacity: 1;
+    background: #3d4249;
+    font-size: 12px;
+    .infonBox_in {
+      padding: 0 12px;
+      width: 200px;
+      display: flex;
+      height: 48px;
+      justify-content: space-around;
+      align-items: center;
+    }
+    span {
+      display: inline-block;
+      text-align: center;
+    }
+    b {
+      font-size: 14px;
+      color: #16b34b;
+    }
+    .line {
+      width: 1px;
+      height: 14px;
+      background: #fff;
+      padding: 0;
+    }
+  }
