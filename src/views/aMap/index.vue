@@ -64,7 +64,9 @@ export default {
       /* 浏览器定位 */
       this.selflocation()
       /* 调用父组件方法 */
-      this.$emit('callbackComponent', { function: 'mapLoad' })
+      this.$emit('callbackComponent',
+        { function: 'mapLoad' }
+      )
     },
     /**
      * 数据存储
