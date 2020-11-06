@@ -3,15 +3,15 @@
     <section class="car-item">
       <header>
         <h4 class="car-logo">
-          <img src="../../../assets/images/cars-logo.png" height="34" alt="">
-          <span>Mustang 2019款</span>
+          <img :src="carInfo.imgUrl" height="34" alt="">
+          <span>{{ carInfo.carsMode }}</span>
         </h4>
         <p class="attr">新能源汽车 5座</p>
       </header>
       <div class="car-content">
         <div class="inof">
           <div>
-            <div class="car-number">粤 B9087N</div>
+            <div class="car-number">{{ carInfo.carsNumber }}</div>
             <div class="car-Power">
               <ul class="active-li-6">
                 <li />
@@ -33,10 +33,10 @@
             </div>
           </div>
         </div>
-        <img src="../../../assets/images/pic001.jpg" height="120" alt="">
+        <img :src="carInfo.carsImg" height="120" alt="">
       </div>
       <footer>
-        <a href="javascript:void(0);" class="parking-link">某某停車場</a>
+        <a href="javascript:void(0);" class="parking-link">{{ carInfo.parkingName }}</a>
       </footer>
     </section>
     <!-- 汽车详情 -->
@@ -116,6 +116,18 @@ export default {
     height: {
       type: String,
       default: '750px'
+    },
+    carInfo: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  watch: {
+    carInfo: {
+      handler(val) {
+        console.log(val)
+      },
+      immediate: true
     }
   }
 }

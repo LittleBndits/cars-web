@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- cars data渲染 -->
-    <Cars />
+    <Cars ref="cars" />
     <!-- 导航 -->
     <Navbar />
     <!-- 地图 -->
@@ -23,7 +23,6 @@ import Navbar from '@c/Navbar'
 import Login from './login'
 // API
 import { GetParking } from '@/api/parking'
-import { GetCarsList } from '@/api/cars'
 export default {
   name: 'Index',
   components: {
@@ -92,7 +91,7 @@ export default {
           /* 添加停车场 覆盖物 */
 
           /* 调用子组件方法 -存储数据 */
-          this.$refs.map.saveData({
+          this.$refs.map && this.$refs.map.saveData({
             key: 'parkingList',
             value: resData
           })
@@ -104,31 +103,19 @@ export default {
       /* 获取当前点击停车场数据 */
       const curr_click_data = e.target.getExtData()
       /* 调用子组件方法 -存储数据 */
-      this.$refs.map.saveData({
+      this.$refs.map && this.$refs.map.saveData({
         key: 'curr_parkingInfo',
         value: curr_click_data
       })
       /* 调用子组件方法 - 路线规划 */
-      this.$refs.map.navigation(curr_click_data)
+      this.$refs.map && this.$refs.map.navigation(curr_click_data)
     },
     /* 获取停车场车辆 */
     getCarsList(e) {
       /* 获取当前点击停车场数据 */
       const curr_click_data = e.target.getExtData()
-
-      GetCarsList({ parkingId: curr_click_data.id })
-        .then(result => {
-          console.log(result)
-        })
-        .catch(() => {})
-
-      /* 调用子组件方法 -存储数据 */
-      this.$refs.map.saveData({
-        key: 'curr_parkingInfo',
-        value: curr_click_data
-      })
-      /* 调用子组件方法 - 路线规划 */
-      this.$refs.map.navigation(curr_click_data)
+      /* 调用子组件方法 - 停车场车辆列表 */
+      this.$refs.cars && this.$refs.cars.getCarsList(curr_click_data.id)
     }
   }
 }
