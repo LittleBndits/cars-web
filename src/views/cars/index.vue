@@ -16,18 +16,18 @@
           <CarItem />
         </swiper-slide>
       </swiper>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
+      <div slot="button-prev" class="swiper-button-prev" />
+      <div slot="button-next" class="swiper-button-next" />
     </div>
   </div>
 </template>
 
 <script>
-import CarItem from "@c/carList/index";
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import CarItem from '@c/carList/index'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 export default {
-  name: "Cars",
+  name: 'Cars',
   components: {
     Swiper,
     SwiperSlide,
@@ -39,20 +39,20 @@ export default {
         slidesPerView: 3,
         spaceBetween: 50,
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
         }
       }
-    };
+    }
   },
   methods: {
     topath() {
       this.$router.push({
-        name: "User"
-      });
+        name: 'User'
+      })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import "./cars";

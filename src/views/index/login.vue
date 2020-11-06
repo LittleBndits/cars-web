@@ -1,23 +1,23 @@
 <template>
-  <div id="login" v-if="show">
+  <div v-if="show" id="login">
     <div class="form-wrap">
       <el-form ref="form" :model="form" :rules="form_rules">
         <el-form-item prop="name">
           <label class="form-label">用户名</label>
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item prop="password">
           <label class="form-label">密码</label>
-          <el-input type="password" v-model="form.password"></el-input>
+          <el-input v-model="form.password" type="password" />
         </el-form-item>
         <el-form-item prop="code">
           <label class="form-label">验证码</label>
           <el-row :gutter="10">
             <el-col :span="14">
-              <el-input v-model="form.code"></el-input>
+              <el-input v-model="form.code" />
             </el-col>
             <el-col :span="10">
-              <el-button type="success" class="el-button-block" @click="getCodeFn()" :disabled="code_disabled" :loading="code_loading">{{ code_text }}</el-button>
+              <el-button type="success" class="el-button-block" :disabled="code_disabled" :loading="code_loading" @click="getCodeFn()">{{ code_text }}</el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -30,130 +30,130 @@
 </template>
 
 <script>
-import sha1 from "js-sha1";
-import { validate_email, validate_password } from "@/utils/validate";
-import { GetCode, Register, Login } from "@/api/login";
-import { getToken, setToken, setUsername } from "@/utils/cookies";
+import sha1 from 'js-sha1'
+import { validate_email, validate_password } from '@/utils/validate'
+import { GetCode, Register, Login } from '@/api/login'
+import { getToken, setToken, setUsername } from '@/utils/cookies'
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     /**
      * 自定义检验规则
      */
     // 检验邮箱
     const validate_name_rules = (rule, value, callback) => {
-      let regEmail = validate_email(value);
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
+      const regEmail = validate_email(value)
+      if (value === '') {
+        callback(new Error('请输入邮箱'))
       } else if (!regEmail) {
-        callback(new Error("邮箱格式不正确"));
+        callback(new Error('邮箱格式不正确'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     // 检验密码
     const validate_password_rules = (rule, value, callback) => {
-      let regPassword = validate_password(value);
-      let passwords_value = this.form.passwords;
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      const regPassword = validate_password(value)
+      const passwords_value = this.form.passwords
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else if (!regPassword) {
-        callback(new Error("请入 >=6 并且 <= 20 位的密码，包含数字、字母"));
+        callback(new Error('请入 >=6 并且 <= 20 位的密码，包含数字、字母'))
       } else if (passwords_value && passwords_value !== value) {
-        callback(new Error("两次密码不一致，请重新输入"));
+        callback(new Error('两次密码不一致，请重新输入'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     // 检验验证码
     const validate_code_rules = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入验证码"));
+      if (value === '') {
+        callback(new Error('请输入验证码'))
       } else if (value.length !== 6) {
-        callback(new Error("请输入长度为6位数的验证码"));
+        callback(new Error('请输入长度为6位数的验证码'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     // 检验规则
     return {
       show: false,
       form: {
-        name: "592529519@163.com",
-        password: "CHENQIUL0NG05.10",
-        passwords: "",
-        code: ""
+        name: '592529519@163.com',
+        password: 'CHENQIUL0NG05.10',
+        passwords: '',
+        code: ''
       },
-      code_text: "获取验证码",
+      code_text: '获取验证码',
       code_loading: false,
       code_disabled: false,
       timer: null,
       submit_disabled: true,
       form_rules: {
-        name: [{ validator: validate_name_rules, trigger: "blur" }],
-        password: [{ validator: validate_password_rules, trigger: "blur" }],
-        code: [{ validator: validate_code_rules, trigger: "blur" }]
+        name: [{ validator: validate_name_rules, trigger: 'blur' }],
+        password: [{ validator: validate_password_rules, trigger: 'blur' }],
+        code: [{ validator: validate_code_rules, trigger: 'blur' }]
       }
-    };
+    }
   },
   beforeMount() {
-    this.show = getToken() ? false : true;
+    this.show = !getToken()
   },
   methods: {
     // 倒计时
     countdown(number) {
-      let second = number;
+      let second = number
       // 禁用按钮
-      this.code_disabled = true;
+      this.code_disabled = true
       // 按钮文本
-      this.code_text = `倒计进${second}秒`;
+      this.code_text = `倒计进${second}秒`
       this.timer = setInterval(() => {
-        second--;
-        this.code_text = `倒计进${second}秒`;
+        second--
+        this.code_text = `倒计进${second}秒`
         if (second < 0) {
-          this.code_text = `重新获取`;
+          this.code_text = `重新获取`
           // 启用按钮
-          this.code_disabled = false;
-          clearInterval(this.timer);
+          this.code_disabled = false
+          clearInterval(this.timer)
         }
-      }, 1000);
+      }, 1000)
     },
     // 获取验证码方法
     getCodeFn() {
-      if (this.form.name === "") {
-        this.$message.error("邮箱不能为空！！");
-        return false;
+      if (this.form.name === '') {
+        this.$message.error('邮箱不能为空！！')
+        return false
       }
       if (!validate_email(this.form.name)) {
         this.$message({
-          message: "邮箱格式有误，请重新输入！！",
-          type: "error"
-        });
-        return false;
+          message: '邮箱格式有误，请重新输入！！',
+          type: 'error'
+        })
+        return false
       }
-      let requestData = {
+      const requestData = {
         username: this.form.name,
-        module: "login"
-      };
-      this.code_text = "发送中";
-      this.code_loading = true;
+        module: 'login'
+      }
+      this.code_text = '发送中'
+      this.code_loading = true
       GetCode(requestData)
         .then(response => {
           this.$message({
             message: response.message,
-            type: "success"
-          });
+            type: 'success'
+          })
           // 激活按钮
-          this.submit_disabled = false;
+          this.submit_disabled = false
           // 清除加载
-          this.code_loading = false;
+          this.code_loading = false
           // 执行倒计时方法
-          this.countdown(60);
+          this.countdown(60)
         })
         .catch(error => {
-          this.code_text = "重新获取";
-          this.code_loading = false;
-        });
+          this.code_text = '重新获取'
+          this.code_loading = false
+        })
     },
     // 提交表单
     submitForm(formName) {
@@ -161,12 +161,12 @@ export default {
         // 表单验证通过
         if (valid) {
           // 三元运算
-          this.login();
+          this.login()
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     // 登录
     login() {
@@ -174,20 +174,20 @@ export default {
         username: this.form.name,
         password: sha1(this.form.password),
         code: this.form.code
-      };
+      }
       Login(requestData).then(response => {
-        const data = response.data;
+        const data = response.data
         this.$message({
           message: response.message,
-          type: "success"
-        });
-        setUsername(data.username);
-        setToken(data.token);
-        this.show = false;
-      });
+          type: 'success'
+        })
+        setUsername(data.username)
+        setToken(data.token)
+        this.show = false
+      })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 #login {

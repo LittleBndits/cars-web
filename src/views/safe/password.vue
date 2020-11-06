@@ -4,22 +4,20 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.name" placeholder="原始密码"></el-input>
+          <el-input v-model="form.name" placeholder="原始密码" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.name" placeholder="新密码密码"></el-input>
+          <el-input v-model="form.name" placeholder="新密码密码" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.name" placeholder="确认密码"></el-input>
+          <el-input v-model="form.name" placeholder="确认密码" />
         </el-form-item>
         <el-form-item>
           <button type="button" class="btn-vcode">获取验证码</button>
-          <el-input v-model="form.name" placeholder="验证码"></el-input>
+          <el-input v-model="form.name" placeholder="验证码" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" class="btn-back"
-            >确定</el-button
-          >
+          <el-button type="primary" class="btn-back" @click="onSubmit">确定</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,28 +25,28 @@
 </template>
 <script>
 export default {
-  name: "Password",
+  name: 'Password',
   data() {
     return {
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: "",
-      },
-    };
+        resource: '',
+        desc: ''
+      }
+    }
   },
   methods: {
     onSubmit() {
-      console.log("submit!");
-    },
-  },
-};
+      console.log('submit!')
+    }
+  }
+}
 </script>
 <style lang="scss">
-@import "./index.scss";
+@import './index.scss';
 </style>
