@@ -150,7 +150,7 @@ export default {
           // 执行倒计时方法
           this.countdown(60)
         })
-        .catch(error => {
+        .catch(() => {
           this.code_text = '重新获取'
           this.code_loading = false
         })

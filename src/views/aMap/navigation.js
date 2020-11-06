@@ -24,3 +24,9 @@ export function WALKING(params) {
     }
   })
 }
+
+export function CLEARWALK(params) {
+  if (walking) {
+    walking.clear()
+  }
+}

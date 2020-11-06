@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import CarItem from '@c/carList/index'
+import CarItem from './components/index'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 export default {
@@ -55,5 +55,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import "./cars";
+@import './cars';
 </style>

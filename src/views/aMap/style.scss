@@ -2,14 +2,14 @@
     min-width: 177px;
     height: 48px;
     border-radius: 48px;
-    line-height: 48px;
     text-align: center;
     color: #fff;
     opacity: 1;
     background: #3d4249;
     font-size: 12px;
+    position: relative;
     .infonBox_in {
-      padding: 0 12px;
+      padding: 8px 12px 0 12px;
       width: 200px;
       display: flex;
       height: 48px;
@@ -29,5 +29,15 @@
       height: 14px;
       background: #fff;
       padding: 0;
+    }
+    .parkingN{
+      position: absolute;
+      width: 100%;
+      top:0;
+      left: 0;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 28px;
     }
   }

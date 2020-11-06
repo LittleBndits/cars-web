@@ -8,7 +8,7 @@
       <!-- 覆盖物 停车场 停放车辆- marker -->
       <el-amap-marker v-for="(marker, index) in parkingList" :key="marker.id + index" :ext-data="marker" :events="marker.events" :offset="marker.offsetTxt" :position="marker.position" :vid="index" :content="marker.contentTxt" />
       <!-- 覆盖物 停车场信息- marker -->
-      <el-amap-marker v-for="(marker, index) in parkingInfo" :key="marker.id+index" :offset="marker.offset" :position="marker.position" :vid="index" :content="marker.content" />
+      <el-amap-marker v-for="(marker, index) in parkingInfo" :key="marker.id+index" :events="marker.events" :offset="marker.offset" :position="marker.position" :vid="index" :content="marker.content" />
     </el-amap>
     <div id="panel" />
   </div>
@@ -16,7 +16,7 @@
 <script>
 import { AMapManager, lazyAMapApiLoaderInstance } from 'vue-amap'
 import { SELFLOCATION } from './location'
-import { WALKING } from './navigation'
+import { WALKING, CLEARWALK } from './navigation'
 const amapManager = new AMapManager()
 export default {
   name: 'Amap',
@@ -120,6 +120,7 @@ export default {
       }
       /* 停车场信息 html */
       const html = `<div class="infonBox">
+                    <h3 class="parkingN">${data.parkingName}</h3>
                     <div class="infonBox_in">
                       <span><b>${data.carsNumber} </b> 辆车</span>
                       <span class="line"></span>
@@ -130,9 +131,19 @@ export default {
         {
           position: data.position,
           offset: [-32, -60],
-          content: html
+          content: html,
+          events: {
+            dblclick: () => {
+              this.dblclickInfoView()
+            }
+          }
         }
       ]
+    },
+    dblclickInfoView() {
+      console.log('dblclickInfoView')
+      CLEARWALK()
+      this.parkingInfo = []
     }
   }
 }
