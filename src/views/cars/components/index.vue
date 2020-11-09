@@ -6,14 +6,14 @@
           <img :src="carInfo.imgUrl" height="34" alt="">
           <span>{{ carInfo.carsMode }}</span>
         </h4>
-        <p class="attr">新能源汽车 5座</p>
+        <p class="attr">{{ carInfo | energyType }}</p>
       </header>
       <div class="car-content">
         <div class="inof">
           <div>
             <div class="car-number">{{ carInfo.carsNumber }}</div>
             <div class="car-Power">
-              <ul class="active-li-6">
+              <ul :class="carInfo.oil | electricNumber">
                 <li />
                 <li />
                 <li />
@@ -27,7 +27,7 @@
               </ul>
               <div class="car-km">
                 <span>約</span>
-                <strong>600</strong>
+                <strong>{{ carInfo.countKm }}</strong>
                 <span>Km</span>
               </div>
             </div>
@@ -112,6 +112,24 @@
 <script>
 export default {
   name: 'CarList',
+  filters: {
+    electricNumber(val) {
+      const surplusVal = Math.round(val / 10)
+      return `active-li-${surplusVal}`
+    },
+    energyType(val) {
+      let energy_txt = ''
+      let seatNum = ''
+      if (val.carsAttr) {
+        const carsAttr = JSON.parse(val.carsAttr)
+        carsAttr.basics && (energy_txt = carsAttr.basics.energy_type !== undefined ? carsAttr.basics.energy_type + '汽车' : '')
+        carsAttr.carsBody && (seatNum = carsAttr.carsBody.car_seat_number !== undefined ? carsAttr.carsBody.car_seat_number + '座' : '')
+        return `${energy_txt}${seatNum}`
+      } else {
+        return ''
+      }
+    }
+  },
   props: {
     height: {
       type: String,
