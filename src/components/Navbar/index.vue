@@ -47,7 +47,7 @@ export default {
 <style lang="scss" scoped>
 .nav-main {
   position: fixed;
-  bottom: 30px;
+  bottom: 72px;
   left: 0;
   text-align: center;
   width: 100%;

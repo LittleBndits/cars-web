@@ -1,5 +1,5 @@
 <template>
-  <div class="cars-view">
+  <div v-if="cars_list.length>0" class="cars-view">
     <div class="car-swiper-warp">
       <swiper ref="mySwiper" :options="swiperOptions">
         <!-- 汽车列表 -->
@@ -41,6 +41,15 @@ export default {
       cars_list: []
     }
   },
+  watch: {
+    '$store.state.app.isclearcarlist': {
+      handler(val) {
+        val && (this.cars_list = [])
+        this.$store.commit('app/CLEAR_CAR_LIST', false)
+      },
+      immediate: true
+    }
+  },
   methods: {
     /* 打开会员中心 */
     topath() {
@@ -54,6 +63,7 @@ export default {
         .then(result => {
           const resData = result.data.data
           resData && (this.cars_list = resData)
+          this.$store.commit('app/REPUEST_CAR_LIST', false)
         })
         .catch(() => {})
     }

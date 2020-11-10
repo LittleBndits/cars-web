@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 module.exports = {
   // 基本路径
   publicPath: process.env.NODE_ENV === 'production' ? '' : './',
@@ -10,14 +10,14 @@ module.exports = {
    * webpack配置,see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
    **/
   chainWebpack: (config) => {
-    // const svgRule = config.module.rule("svg");     
-    // svgRule.uses.clear();     
+    // const svgRule = config.module.rule("svg");
+    // svgRule.uses.clear();
     // svgRule
     // .use("svg-sprite-loader")
     // .loader("svg-sprite-loader")
-    // .options({ 
+    // .options({
     //   symbolId: "icon-[name]",
-    //   include: ["./src/icons"] 
+    //   include: ["./src/icons"]
     // });
   },
   configureWebpack: (config) => {
@@ -62,7 +62,7 @@ module.exports = {
     proxy: {
       // 后端地址==http://www.web-jshtml.cn/api/cars
       [process.env.VUE_APP_API_LOGIN]: {
-        target: process.env.VUE_API_DEV_LOGIN_TARGET, //API服务器的地址
+        target: process.env.VUE_API_DEV_LOGIN_TARGET, // API服务器的地址
         changeOrigin: true,
         pathRewrite: {
           [`^${process.env.VUE_APP_API_LOGIN}`]: ''
@@ -70,7 +70,7 @@ module.exports = {
       },
       // 前端地址==http://www.web-jshtml.cn/api/cars/web
       [process.env.VUE_APP_API_WEB]: {
-        target: process.env.VUE_API_DEV_WEB_TARGET, //API服务器的地址
+        target: process.env.VUE_API_DEV_WEB_TARGET, // API服务器的地址
         changeOrigin: true,
         pathRewrite: {
           [`^${process.env.VUE_APP_API_WEB}`]: ''

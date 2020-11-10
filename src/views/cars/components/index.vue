@@ -1,12 +1,12 @@
 <template>
   <div class="carList">
-    <section class="car-item">
+    <section class="car-item" @click="showCarDetail">
       <header>
         <h4 class="car-logo">
           <img :src="carInfo.imgUrl" height="34" alt="">
           <span>{{ carInfo.carsMode }}</span>
         </h4>
-        <p class="attr">{{ carInfo | energyType }}</p>
+        <p class="attr"> <b>{{ carInfo | energyType }}</b> <span>{{ carInfo | seatNum }}</span></p>
       </header>
       <div class="car-content">
         <div class="inof">
@@ -40,31 +40,34 @@
       </footer>
     </section>
     <!-- 汽车详情 -->
-    <section class="car-item car-item-details" :style="'height:' + height">
+    <section v-if="car_details" class="car-item car-item-details" :style="'height:' + car_details_heigth">
       <div class="scroll">
         <h4 class="column">
-          某某停车场
-          <i class="close" />
+          {{ carInfo.parkingName }}
+          <i class="close" @click="closeCarDetail" />
         </h4>
         <header>
           <h4 class="car-logo">
-            <img src="../../../assets/images/cars-logo.png" height="34" alt="">
-            <span>Mustang 2019款</span>
+            <img :src="carInfo.imgUrl" height="34" alt="">
+            <span>{{ carInfo.carsMode }}</span>
           </h4>
-          <p class="attr">新能源汽车 5座</p>
+          <p class="attr"><b>{{ carInfo | energyType }}</b> <span>{{ carInfo | seatNum }}</span></p>
         </header>
-        <img src="../../../assets/images/pic001.jpg" alt="" width="100%">
+        <img :src="carInfo.carsImg" alt="" height="221" style="margin: auto">
         <div class="clearfix">
-          <div class="pull-left font24">粤 B9087N</div>
+          <div class="pull-left font24">{{ carInfo.carsNumber }}</div>
           <div class="car-km pull-right">
             <span>約</span>
-            <strong>600</strong>
+            <strong>{{ carInfo.countKm }}</strong>
             <span>Km</span>
           </div>
         </div>
         <div class="car-electric-box">
           <div class="p-r">
-            <span class="e-high" style="width:80%" />
+            <span
+              class="e-high"
+              :style="`width:${carInfo.oil}%`"
+            />
             <span class="e-bg" />
           </div>
         </div>
@@ -110,24 +113,32 @@
 </template>
 
 <script>
+import { formatVal } from '@/utils/format'
 export default {
   name: 'CarList',
   filters: {
+    /* 剩余有量/电量 */
     electricNumber(val) {
       const surplusVal = Math.round(val / 10)
       return `active-li-${surplusVal}`
     },
+    /* 汽车类型 */
     energyType(val) {
-      let energy_txt = ''
-      let seatNum = ''
-      if (val.carsAttr) {
-        const carsAttr = JSON.parse(val.carsAttr)
-        carsAttr.basics && (energy_txt = carsAttr.basics.energy_type !== undefined ? carsAttr.basics.energy_type + '汽车' : '')
-        carsAttr.carsBody && (seatNum = carsAttr.carsBody.car_seat_number !== undefined ? carsAttr.carsBody.car_seat_number + '座' : '')
-        return `${energy_txt}${seatNum}`
-      } else {
-        return ''
-      }
+      const value = formatVal({
+        data: val,
+        parentAttr: 'basics',
+        childAttr: 'energy_type'
+      })
+      return value ? `${value}汽车 ` : ''
+    },
+    /* 汽车座位 */
+    seatNum(val) {
+      const value = formatVal({
+        data: val,
+        parentAttr: 'carsBody',
+        childAttr: 'car_seat_number'
+      })
+      return value ? `${value}座` : ''
     }
   },
   props: {
@@ -140,12 +151,36 @@ export default {
       default: () => {}
     }
   },
+  data() {
+    return {
+      car_details: false,
+      car_details_heigth: 0,
+      timer: null
+    }
+  },
   watch: {
     carInfo: {
-      handler(val) {
-        console.log(val)
-      },
+      handler(val) {},
       immediate: true
+    }
+  },
+  methods: {
+    /* 显示车辆详情 */
+    showCarDetail() {
+      const viewHeight =
+        document.documentElement.clientHeight || document.body.clientHeight
+      this.car_details = true
+      this.timer = setTimeout(() => {
+        this.car_details_heigth = viewHeight - 140 + 'px'
+        clearInterval(this.timer)
+      }, 10)
+    },
+    closeCarDetail() {
+      this.car_details_heigth = '0'
+      this.timer = setTimeout(() => {
+        this.car_details = false
+        clearInterval(this.timer)
+      }, 100)
     }
   }
 }

@@ -41,21 +41,7 @@ export default {
     }
   },
   watch: {},
-  mounted() {
-    /* 监听页面点击 */
-    document.addEventListener('mouseup', e => {
-      const userCon = document.getElementById('children-view')
-      if (userCon && !userCon.contains(e.target)) {
-        const routeName = this.$route.name
-        if (routeName === 'Index') {
-          return false
-        }
-        this.$router.push({
-          name: 'Index'
-        })
-      }
-    })
-  },
+
   methods: {
     /** 地图初始化完成回调 */
     callbackComponent(params) {
@@ -81,6 +67,7 @@ export default {
             item.contentTxt = `<div  class="carsNum">${item.carsNumber}</div>`
             item.events = {
               click: e => {
+                this.$store.commit('app/REPUEST_CAR_LIST', true)
                 /* 路线规划 */
                 this.navigation(e)
                 /* 获取停车场车辆 */
@@ -116,6 +103,10 @@ export default {
       const curr_click_data = e.target.getExtData()
       /* 调用子组件方法 - 停车场车辆列表 */
       this.$refs.cars && this.$refs.cars.getCarsList(curr_click_data.id)
+    },
+    /* 清空车辆列表 */
+    clearCarList() {
+      this.$refs.cars.$data.cars_list = []
     }
   }
 }
