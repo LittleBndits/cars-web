@@ -141,7 +141,6 @@ export default {
       ]
     },
     dblclickInfoView() {
-      console.log(12458)
       CLEARWALK()
       this.parkingInfo = []
       this.$emit('callbackComponent', {
