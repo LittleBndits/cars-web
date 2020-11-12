@@ -10,7 +10,7 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.name" placeholder="手机号" />
+          <UserName :value.sync="form.username" />
         </el-form-item>
         <el-form-item>
           <el-input v-model="form.name" placeholder="密码" />
@@ -19,8 +19,7 @@
           <el-input v-model="form.name" placeholder="确认密码" />
         </el-form-item>
         <el-form-item>
-          <button type="button" class="btn-vcode">获取验证码</button>
-          <el-input v-model="form.name" placeholder="验证码" />
+          <Code :is-phone="form.username" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="btn-back" @click="onSubmit">确定</el-button>
@@ -30,24 +29,21 @@
   </div>
 </template>
 <script>
+import UserName from '@/components/account/username'
+import Code from '@/components/code/code'
 export default {
-  name: 'Password',
+  name: 'Register',
+  components: { UserName, Code },
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        username: ''
       }
     }
   },
   methods: {
     onSubmit() {
+      console.log(this.form)
       console.log('submit!')
     }
   }

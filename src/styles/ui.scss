@@ -35,6 +35,9 @@
     top: 4px;
     z-index: 10;
     cursor: pointer;
+    &[disabled]{
+    opacity: .5;
+    }
   }
 }
 .btn-back {

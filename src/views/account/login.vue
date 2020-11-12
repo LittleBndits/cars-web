@@ -1,6 +1,6 @@
 <template>
   <div class="user-container">
-    <Back titlename="登录">
+    <Back>
       <template v-slot:backRight>
         <div>
           <router-link to="/register" class="color-white opactiy-4">注册</router-link>
