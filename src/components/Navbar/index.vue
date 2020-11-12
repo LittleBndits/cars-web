@@ -2,40 +2,39 @@
   <div class="nav-main">
     <ul>
       <li>
-        <i class="icon icon-w-44 icon-help"></i>
+        <i class="icon icon-w-44 icon-help" />
       </li>
       <li>
-        <i class="icon icon-w-44 icon-search"></i>
+        <i class="icon icon-w-44 icon-search" />
       </li>
       <li>
         <i class="icon icon-w-44 iconBtn">选择车辆</i>
       </li>
       <li>
-        <i class="icon icon-w-44 icon-location"></i>
+        <i class="icon icon-w-44 icon-location" />
       </li>
       <li>
-        <i class="icon icon-w-44 icon-user" @click="toUser"></i>
+        <i class="icon icon-w-44 icon-user" @click="toUser" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { getAccountToken } from '@/utils/cookies'
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   data() {
-    return {
-      
-    }
+    return {}
   },
   methods: {
-    toUser(){
+    toUser() {
       this.$router.push({
-        name:'User'
+        name: getAccountToken() ? 'User' : 'Login'
       })
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -53,6 +52,5 @@ export default {
     align-items: center;
     margin: auto;
   }
- 
 }
 </style>

@@ -1,6 +1,12 @@
 <template>
   <div class="user-container">
-    <Back titlename="修改登录密码" />
+    <Back>
+      <template v-slot:backRight>
+        <div>
+          <router-link to="/login" class="color-white opactiy-4">登录</router-link>
+        </div>
+      </template>
+    </Back>
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>

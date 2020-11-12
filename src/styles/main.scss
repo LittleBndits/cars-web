@@ -10,6 +10,9 @@
 .color-blue {
   color: $color-blue;
 }
+.color-white {
+  color: $color-white;
+}
 /*aling*/
 .text-l {
   text-align: left;
@@ -41,6 +44,10 @@
 }
 .p-fd {
   position: fixed;
+}
+/* opactiy */
+.opactiy-4 {
+  opacity: 0.4;
 }
 
 /*清除浮动*/

@@ -1,20 +1,19 @@
 <template>
   <div class="user-container">
-    <Back titlename="修改登录密码" />
+    <Back titlename="登录">
+      <template v-slot:backRight>
+        <div>
+          <router-link to="/register" class="color-white opactiy-4">注册</router-link>
+        </div>
+      </template>
+    </Back>
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.name" placeholder="原始密码" />
+          <el-input v-model="form.name" placeholder="手机号" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.name" placeholder="新密码密码" />
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="form.name" placeholder="确认密码" />
-        </el-form-item>
-        <el-form-item>
-          <button type="button" class="btn-vcode">获取验证码</button>
-          <el-input v-model="form.name" placeholder="验证码" />
+          <el-input v-model="form.name" placeholder="密码" />
         </el-form-item>
         <el-form-item>
           <el-button
@@ -24,6 +23,9 @@
           >确定</el-button>
         </el-form-item>
       </el-form>
+      <div class="text-r">
+        <router-link to="/forget" class="color-white opactiy-4">忘记密码</router-link>
+      </div>
     </div>
   </div>
 </template>
