@@ -11,3 +11,14 @@ export function GetCarsList(data) {
   })
 }
 
+/**
+ * 获取车辆租赁类型
+ */
+export function GETCARSLEASE(data) {
+  return service.request({
+    method: 'post',
+    url: `${process.env.VUE_APP_API_WEB}/lease/`,
+    data
+  })
+}
+

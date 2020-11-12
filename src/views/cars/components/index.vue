@@ -64,10 +64,7 @@
         </div>
         <div class="car-electric-box">
           <div class="p-r">
-            <span
-              class="e-high"
-              :style="`width:${carInfo.oil}%`"
-            />
+            <span class="e-high" :style="`width:${carInfo.oil}%`" />
             <span class="e-bg" />
           </div>
         </div>
@@ -75,28 +72,10 @@
           取车约支付12.0元停车费，实际补贴12.0元
         </div>
         <ul class="car-type-list">
-          <li class="current">
-            <span class="type-name">日租车</span>
+          <li v-for="item in cars_lease" :key="item.carsLeaseTypeId" :class="{'current':cars_lease_currId===item.carsLeaseTypeId}" @click="carsleaseClick(item)">
+            <span class="type-name">{{ item.carsLeaseTypeName }}</span>
             <span class="type-price">
-              300.0元/1天
-            </span>
-          </li>
-          <li>
-            <span class="type-name">日租车</span>
-            <span class="type-price">
-              300.0元/天
-            </span>
-          </li>
-          <li>
-            <span class="type-name">日租车</span>
-            <span class="type-price">
-              300.0元/天
-            </span>
-          </li>
-          <li>
-            <span class="type-name">日租车</span>
-            <span class="type-price">
-              300.0元/天
+              {{ item.price }}元/1天
             </span>
           </li>
         </ul>
@@ -114,6 +93,7 @@
 
 <script>
 import { formatVal } from '@/utils/format'
+import { GETCARSLEASE } from '@/api/cars'
 export default {
   name: 'CarList',
   filters: {
@@ -155,7 +135,12 @@ export default {
     return {
       car_details: false,
       car_details_heigth: 0,
-      timer: null
+      // 定时器
+      timer: null,
+      // 租赁类型
+      cars_lease: [],
+      cars_lease_data: '',
+      cars_lease_currId: ''
     }
   },
   watch: {
@@ -170,17 +155,41 @@ export default {
       const viewHeight =
         document.documentElement.clientHeight || document.body.clientHeight
       this.car_details = true
+      /* 查询车辆租赁类型 */
+      this.getcarslease()
       this.timer = setTimeout(() => {
         this.car_details_heigth = viewHeight - 140 + 'px'
         clearInterval(this.timer)
       }, 10)
     },
+    /* 关闭车辆详情 */
     closeCarDetail() {
       this.car_details_heigth = '0'
       this.timer = setTimeout(() => {
         this.car_details = false
         clearInterval(this.timer)
       }, 100)
+    },
+    /* 查询车辆租赁类型 */
+    getcarslease() {
+      if (this.cars_lease.length > 0) {
+        return false
+      }
+      GETCARSLEASE({ carsId: this.carInfo.id })
+        .then((result) => {
+          const resData = result.data.data
+          if (resData) {
+            this.cars_lease = resData
+            this.cars_lease_currId = resData[0].carsLeaseTypeId
+          }
+        })
+        .catch(() => {})
+    },
+    /* 选择租赁类型 */
+    carsleaseClick(data) {
+      console.log('carsleaseClick -> data', data)
+      this.cars_lease_data = data
+      this.cars_lease_currId = data.carsLeaseTypeId
     }
   }
 }
