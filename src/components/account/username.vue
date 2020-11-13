@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-input v-model.trim="user_name" maxlength="11" minlength="6" :placeholder="placeholder" @input="enterInput" />
+    <el-form-item :rules="[{ required: true, validator: validateUserName, trigger: 'blur' }]" prop="username">
+      <el-input v-model.trim="user_name" maxlength="11" minlength="6" :placeholder="placeholder" @input="enterInput" />
+    </el-form-item>
   </div>
 </template>
 
@@ -17,15 +19,21 @@ export default {
   },
   data() {
     return {
-      user_name: '',
-      tips: '* 请输入正确的手机号'
+      user_name: ''
     }
   },
   methods: {
+    validateUserName(rule, value, callback) {
+      if (!this.user_name) {
+        return callback(new Error('请填写手机号'))
+      } else if (!validate_phone(this.user_name)) {
+        return callback(new Error('手机格式不正确'))
+      } else {
+        callback()
+      }
+    },
     enterInput(val) {
-      const isphone = validate_phone(val)
-      const value = isphone ? val : ''
-      this.$emit('update:value', value)
+      this.$emit('update:value', this.user_name)
     }
   }
 }

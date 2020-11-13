@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getAccountToken } from '@/utils/cookies'
+import { getUserToken } from '@/utils/carsCookies'
 export default {
   name: 'Navbar',
   data() {
@@ -30,7 +30,7 @@ export default {
   methods: {
     toUser() {
       this.$router.push({
-        name: getAccountToken() ? 'User' : 'Login'
+        name: getUserToken() ? 'User' : 'Login'
       })
     }
   }

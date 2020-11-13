@@ -1,11 +1,15 @@
 <template>
   <div>
-    <button type="button" class="btn-vcode" :disabled="disabled" @click="handerCode">{{ buttonTxt }}</button>
-    <el-input v-model="code" placeholder="验证码" />
+    <el-form-item :rules="rules" prop="code">
+      <el-button :loading="laoding" type="button" class="btn-vcode" :disabled="disabled" @click="handerCode">{{ buttonTxt }}</el-button>
+      <el-input v-model="code" placeholder="验证码" @input="codeValue" />
+    </el-form-item>
   </div>
 </template>
 
 <script>
+/* Api */
+import { GetCode } from '@/api/account'
 /* 检验 */
 import { validate_phone } from '@/utils/validate'
 export default {
@@ -20,12 +24,17 @@ export default {
     return {
       /* 按钮状态 */
       disabled: true,
+      laoding: false,
       /* 验证码 */
       code: '',
       /* 按钮文本 */
       buttonTxt: '获取验证码',
       /* 定时器 */
-      thimer: null
+      thimer: null,
+      rules: [
+        { required: true, message: '验证码不能为空', trigger: 'blur' },
+        { min: 6, max: 6, message: '请输入6位字符验证码', trigger: 'blur' }
+      ]
     }
   },
   watch: {
@@ -38,8 +47,23 @@ export default {
   methods: {
     /* 获取验证码 */
     handerCode() {
-      /* 倒计时 */
-      this.countdown()
+      this.laoding = true
+      const params = {
+        username: this.isPhone,
+        module: 'register'
+      }
+      GetCode(params)
+        .then((result) => {
+          if (result.resCode === 0) {
+            this.$message.success(result.message)
+            this.laoding = false
+            /* 倒计时 */
+            this.countdown()
+          }
+        })
+        .catch(() => {
+          this.laoding = false
+        })
     },
     /* 倒计时 */
     countdown() {
@@ -61,6 +85,9 @@ export default {
           this.disabled = false
         }
       }, 1000)
+    },
+    codeValue(val) {
+      this.$emit('update:codeValue', val)
     }
   }
 }
