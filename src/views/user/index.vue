@@ -43,7 +43,7 @@ export default {
   methods: {
     /* 登出 */
     checkout() {
-      this.$store.dispatch('account/logoutActions', '').then(() => {
+      this.$store.dispatch('account/logoutActions').then(() => {
         this.$router.replace({
           name: 'Index'
         })

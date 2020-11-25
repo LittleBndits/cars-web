@@ -27,8 +27,6 @@ import UserName from '@/components/account/username'
 import Password from '@/components/account/password'
 import PasswordComfirm from '@/components/account/passwordComfirm'
 import Code from '@/components/code/code'
-/* Api */
-import { Forget } from '@/api/account'
 export default {
   name: 'Forget',
   components: { UserName, Code, Password, PasswordComfirm },
