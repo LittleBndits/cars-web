@@ -10,6 +10,9 @@
 .color-blue {
   color: $color-blue;
 }
+.color-white {
+  color: $color-white;
+}
 /*aling*/
 .text-l {
   text-align: left;
@@ -42,6 +45,10 @@
 .p-fd {
   position: fixed;
 }
+/* opactiy */
+.opactiy-4 {
+  opacity: 0.8;
+}
 
 /*清除浮动*/
 .clearfix {
@@ -49,6 +56,11 @@
 }
 .user-container {
   padding: 0 30px;
+}
+/* 提示样式 */
+.tipsColor{
+  color: #f74040;
+  opacity: .7;
 }
 
 /*group-links*/

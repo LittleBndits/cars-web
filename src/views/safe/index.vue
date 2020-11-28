@@ -19,11 +19,11 @@
 </template>
 <script>
 export default {
-  name: "Safe",
+  name: 'Safe',
   data() {
-    return {};
-  },
-};
+    return {}
+  }
+}
 </script>
 <style lang="scss">
 @import "./index.scss";

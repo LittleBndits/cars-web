@@ -1,27 +1,37 @@
 <template>
   <div class="back-con">
     <div class="back">
-      <span class="icon-back" @click="backFn"></span>
-      <span class="titel">{{titlename}}</span>
+      <div class="back-left">
+        <span class="icon-back" @click="backFn" />
+        <span class="titel">{{ title }}</span>
+      </div>
+      <div class="back-right">
+        <slot name="backRight" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name:"Back",
-  props:{
-    titlename:{
-      type:String,
-      default:''
+  name: 'Back',
+  props: {
+    titlename: {
+      type: String,
+      default: ''
     }
   },
-  methods:{
-    backFn(){
+  computed: {
+    title: function() {
+      return this.$store.state.app.routerName
+    }
+  },
+  methods: {
+    backFn() {
       this.$router.back(-1)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,6 +67,12 @@ export default {
       @include webkit(transform, rotate(-45deg));
       display: inline-block;
     }
+  }
+  .back-left{
+    float: left;
+  }
+  .back-right{
+    float: right;
   }
 }
 </style>
