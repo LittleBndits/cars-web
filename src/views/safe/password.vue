@@ -17,11 +17,7 @@
           <el-input v-model="form.name" placeholder="验证码" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            class="btn-back"
-            @click="onSubmit"
-          >确定</el-button>
+          <el-button type="primary" class="btn-back" @click="onSubmit">确定</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -52,5 +48,5 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "./index.scss";
+@import './index.scss';
 </style>

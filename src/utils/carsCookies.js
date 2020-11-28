@@ -7,6 +7,7 @@ const usernameKey = 'accountUserName'
 /* token */
 // 获取token
 export function getUserToken() { return Cookies.get(tokenKey) }
+export function getTokencars() { return Cookies.get(tokenKey) }
 // 写入token
 export function setUserToken(value) { return Cookies.set(tokenKey, value) }
 // 删除token

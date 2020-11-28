@@ -5,6 +5,12 @@ const mutations = {
   /* 设置路由 title */
   SET_ROUTER_TITLE(state, value) {
     state.routerName = value
+  },
+  CLEAR_CAR_LIST(state, payload) {
+    state.isclearcarlist = payload
+  },
+  REPUEST_CAR_LIST(state, payload) {
+    state.isRepuestCarlist = payload
   }
 }
 const getters = {}
@@ -14,5 +20,7 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
+  isclearcarlist: false,
+  isRepuestCarlist: false
 }

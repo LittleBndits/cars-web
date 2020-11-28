@@ -1,6 +1,7 @@
 import axios from 'axios'
 // cookies
 import { getToken, getUsername } from './cookies'
+import { getTokencars } from './carsCookies'
 // ElementUI 单独引入
 import { Message } from 'element-ui'
 // 创建实例
@@ -14,6 +15,7 @@ const service = axios.create({
 service.interceptors.request.use(function(config) {
   // 在发送请求之前做些什么
   config.headers['Token'] = getToken() // 携带token
+  config.headers['Tokencars'] = getTokencars() // 携带会员token
   config.headers['Username'] = getUsername() // 携带token
   return config
 }, function(error) {

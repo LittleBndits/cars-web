@@ -2,18 +2,22 @@
   <div class="nav-main">
     <ul>
       <li>
+        <!-- 帮助 -->
         <i class="icon icon-w-44 icon-help" />
       </li>
       <li>
+        <!-- 搜索 -->
         <i class="icon icon-w-44 icon-search" />
       </li>
       <li>
         <i class="icon icon-w-44 iconBtn">选择车辆</i>
       </li>
       <li>
-        <i class="icon icon-w-44 icon-location" />
+        <!-- 定位 -->
+        <i class="icon icon-w-44 icon-location" @click="selflocation" />
       </li>
       <li>
+        <!-- 会员 -->
         <i class="icon icon-w-44 icon-user" @click="toUser" />
       </li>
     </ul>
@@ -32,6 +36,10 @@ export default {
       this.$router.push({
         name: getUserToken() ? 'User' : 'Login'
       })
+    },
+    /* 定位 */
+    selflocation() {
+      this.$store.commit('location/SELF_LOCATION')
     }
   }
 }
@@ -40,7 +48,7 @@ export default {
 <style lang="scss" scoped>
 .nav-main {
   position: fixed;
-  bottom: 60px;
+  bottom: 72px;
   left: 0;
   text-align: center;
   width: 100%;
