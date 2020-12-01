@@ -145,7 +145,13 @@ export default {
       accountToken: this.$store.state.account.accountToken,
       // 提示信息
       meagess_item: this.$store.state.config.meagess_item,
-      backupKey: ''
+      backupKey: '',
+      audit_user: [
+        'check_real_name',
+        'check_cars',
+        'gilding',
+        'check_real_name'
+      ]
     }
   },
   watch: {
@@ -174,38 +180,44 @@ export default {
       CONFIRMCARS(requestdata)
         .then((result) => {
           const data = result.data
-          if (
-            !data.check_real_name ||
-            !data.check_cars ||
-            !data.gilding ||
-            !data.check_real_name
-          ) {
-            const key = Object.keys(data)
-            let msg = ''
-            if (key && key.length) {
+          const key = Object.keys(data)
+          if (this.audit_user.includes(key[0])) {
+            if (
+              !data.check_real_name ||
+              !data.check_cars ||
+              !data.gilding ||
+              !data.check_real_name
+            ) {
+              const key = Object.keys(data)
+              let msg = ''
               this.backupKey = key[0]
               msg = this.meagess_item[key[0]].msg
+              this.$confirm(msg, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+                .then(() => {
+                  const toRouter = this.meagess_item[this.backupKey].router
+                  this.$router.push({
+                    path: toRouter,
+                    query: {
+                      type: this.meagess_item[this.backupKey].type
+                    }
+                  })
+                })
+                .catch(() => {
+                  this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                  })
+                })
             }
-            this.$confirm(msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            })
-              .then(() => {
-                const toRouter = this.meagess_item[this.backupKey].router
-                this.$router.push({
-                  path: toRouter,
-                  query: {
-                    type: this.meagess_item[this.backupKey].type
-                  }
-                })
-              })
-              .catch(() => {
-                this.$message({
-                  type: 'info',
-                  message: '已取消删除'
-                })
-              })
+          } else {
+            let msg = ''
+            this.backupKey = key[0]
+            msg = this.meagess_item[key[0]].msg
+            this.$message.error(msg)
           }
         })
         .catch(() => {})
@@ -255,5 +267,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import './index.scss';
+@import "./index.scss";
 </style>

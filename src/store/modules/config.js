@@ -19,6 +19,9 @@ const state = {
       msg: '您的预缴违章金额小于200元，请先预缴违章金额',
       router: '/recharge',
       type: 'illegal'
+    },
+    subscribe: {
+      msg: '您已预约了其他车辆，请勿再次预约'
     }
   }
 }
