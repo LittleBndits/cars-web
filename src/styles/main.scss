@@ -13,6 +13,8 @@
 .color-white {
   color: $color-white;
 }
+.color-success { color: #09bd00; }
+.color-fail { color: #bd1b00; }
 /*aling*/
 .text-l {
   text-align: left;
@@ -23,6 +25,10 @@
 .text-c {
   text-align: center;
 }
+
+/* line-height */
+.lh-40 { line-height: 40px;}
+
 
 /*float*/
 .pull-left {
@@ -95,4 +101,14 @@
     @include webkit(box-sizing, border-box);
     @include webkit(transform, rotate(45deg));
   }
+}
+/* blank */
+.blank-40 { height: 40px; }
+.blank-20 { height: 20px; }
+.blank-100 { height: 100px; }
+
+.button-block {
+  width: 100%;
+  display: block;
+  text-align: center;
 }

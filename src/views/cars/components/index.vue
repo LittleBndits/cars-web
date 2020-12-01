@@ -144,7 +144,8 @@ export default {
       // token
       accountToken: this.$store.state.account.accountToken,
       // 提示信息
-      meagess_item: this.$store.state.config.meagess_item
+      meagess_item: this.$store.state.config.meagess_item,
+      backupKey: ''
     }
   },
   watch: {
@@ -181,19 +182,21 @@ export default {
             const key = Object.keys(data)
             let msg = ''
             if (key && key.length) {
-              msg = this.meagess_item[key[0]]
+              this.backupKey = key[0]
+              msg = this.meagess_item[key[0]].msg
             }
-
-            console.log('🚀 ~ file: index.vue ~ line 187 ~ .then ~ key')
             this.$confirm(msg, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             })
               .then(() => {
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
+                const toRouter = this.meagess_item[this.backupKey].router
+                this.$router.push({
+                  path: toRouter,
+                  query: {
+                    type: this.meagess_item[this.backupKey].type
+                  }
                 })
               })
               .catch(() => {

@@ -8,15 +8,15 @@
       </div>
     </div>
     <ul class="group-links">
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/my" tag="a" class="arrow">
         <i class="icon icon-router-link-001" />
         我的账户
       </router-link>
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/order" tag="a" class="arrow">
         <i class="icon icon-router-link-002" />
         租车订单
       </router-link>
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/authentication" tag="a" class="arrow">
         <i class="icon icon-router-link-003" />
         实名认证
       </router-link>
