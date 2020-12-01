@@ -5,13 +5,10 @@
       <router-link to="/password" class="arrow">
         修改登录密码
       </router-link>
-      <router-link to="aa" class="arrow">
+      <router-link to="/capital" class="arrow">
         设置资金密码
       </router-link>
-      <router-link to="aa" class="arrow">
-        绑定手机号
-      </router-link>
-      <router-link to="aa" class="arrow">
+      <router-link to="/bank" class="arrow">
         绑定银行卡号
       </router-link>
     </ul>
@@ -19,11 +16,11 @@
 </template>
 <script>
 export default {
-  name: "Safe",
+  name: 'Safe',
   data() {
-    return {};
-  },
-};
+    return {}
+  }
+}
 </script>
 <style lang="scss">
 @import "./index.scss";
