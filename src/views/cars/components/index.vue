@@ -159,6 +159,7 @@ export default {
     confirmCars() {
       if (!this.accountToken) {
         this.$router.push('/login')
+        return false
       }
       console.log(this.$store.state.account.accountToken)
       if (!this.cars_lease_currId) {
