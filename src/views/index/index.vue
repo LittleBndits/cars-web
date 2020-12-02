@@ -12,7 +12,14 @@
     <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
-
+    <div v-if="order_data && order_data.order_no" class="carsOrder">
+      <router-link :to="{path:'/orderDetailed',query:{order_no:order_data.order_no}}" style="color:#fff">您有一个订单正在进行 </router-link>
+    </div>
+    <div v-if="order_data" class="btn-G">
+      <el-button v-if="order_data.order_status==='WAIT'" type="primary" size="small" @click="carsget">取车</el-button>
+      <el-button v-if="order_data.order_status==='WAIT'" type="danger" size="small" @click="carscancel">取消</el-button>
+      <el-button v-if="order_data.order_status==='RETURN'" type="success" size="small" @click="carsreturn">还车</el-button>
+    </div>
   </div>
 </template>
 
@@ -23,6 +30,7 @@ import Navbar from '@c/Navbar'
 import Login from './login'
 // API
 import { GetParking } from '@/api/parking'
+import { GETCARSACTIVATION, CARSGET, CARSRETURN, CARSCANCEL } from '@/api/order'
 export default {
   name: 'Index',
   components: {
@@ -32,7 +40,9 @@ export default {
     Navbar
   },
   data() {
-    return {}
+    return {
+      order_data: JSON.parse(localStorage.getItem('order_data'))
+    }
   },
   computed: {
     show() {
@@ -42,8 +52,11 @@ export default {
   },
 
   watch: {},
+  beforeMount() {
+    !this.order_data && this.getcarsactivation()
+  },
   mounted() {
-    document.addEventListener('mouseup', e => {
+    document.addEventListener('mouseup', (e) => {
       const userCon = document.getElementById('children-view')
       if (userCon && !userCon.contains(e.target)) {
         const routeName = this.$route.name
@@ -58,15 +71,13 @@ export default {
     const rotuerName = this.$route.name
     return rotuerName !== 'Index'
   },
-
   methods: {
     /** 地图初始化完成回调 */
     callbackComponent(params) {
       params.function && this[params.function]()
     },
     mapLoad() {
-      GetParking().then(res => {
-        console.log('mapLoad -> res', res)
+      GetParking().then((res) => {
         /* 地图加载完成后--执行的方法 */
         this.getparking() // 查询停车场列表
       })
@@ -74,9 +85,9 @@ export default {
     /* 查询停车场列表 */
     getparking() {
       GetParking()
-        .then(result => {
+        .then((result) => {
           const resData = result.data.data
-          resData.forEach(item => {
+          resData.forEach((item) => {
             item.position = item.lnglat.split(',')
             item.offset = [-29, -59]
             item.offsetTxt = [-29, -59]
@@ -86,7 +97,7 @@ export default {
               '" >'
             item.contentTxt = `<div  class="carsNum">${item.carsNumber}</div>`
             item.events = {
-              click: e => {
+              click: (e) => {
                 this.$store.commit('app/REPUEST_CAR_LIST', true)
                 /* 路线规划 */
                 this.navigation(e)
@@ -98,10 +109,11 @@ export default {
           /* 添加停车场 覆盖物 */
 
           /* 调用子组件方法 -存储数据 */
-          this.$refs.map && this.$refs.map.saveData({
-            key: 'parkingList',
-            value: resData
-          })
+          this.$refs.map &&
+            this.$refs.map.saveData({
+              key: 'parkingList',
+              value: resData
+            })
         })
         .catch(() => {})
     },
@@ -110,10 +122,11 @@ export default {
       /* 获取当前点击停车场数据 */
       const curr_click_data = e.target.getExtData()
       /* 调用子组件方法 -存储数据 */
-      this.$refs.map && this.$refs.map.saveData({
-        key: 'curr_parkingInfo',
-        value: curr_click_data
-      })
+      this.$refs.map &&
+        this.$refs.map.saveData({
+          key: 'curr_parkingInfo',
+          value: curr_click_data
+        })
       /* 调用子组件方法 - 路线规划 */
       this.$refs.map && this.$refs.map.navigation(curr_click_data)
     },
@@ -127,6 +140,45 @@ export default {
     /* 清空车辆列表 */
     clearCarList() {
       this.$refs.cars.$data.cars_list = []
+    },
+
+    /* 查是否有订单车辆 */
+    getcarsactivation() {
+      GETCARSACTIVATION().then((result) => {
+        const resData = result.data
+        if (resData) {
+          localStorage.setItem('order_data', JSON.stringify(resData))
+        }
+      })
+    },
+    /* 取车 */
+    carsget() {
+      const { cars_id, order_no } = this.order_data
+      CARSGET({ cars_id, order_no }).then((result) => {
+        if (result.data && result.data.order_status) {
+          this.$set(this.order_data, 'order_status', result.data.order_status)
+          localStorage.setItem('order_data', this.order_data)
+        }
+        this.$message.success(result.message)
+      })
+    },
+    /* 还车 */
+    carsreturn() {
+      const { cars_id, order_no } = this.order_data
+      CARSRETURN({ cars_id, order_no }).then((result) => {
+        this.order_data = null
+        localStorage.removeItem('order_data')
+        this.$message(result.message)
+      })
+    },
+    /* 取消 */
+    carscancel() {
+      const { cars_id, order_no } = this.order_data
+      CARSCANCEL({ cars_id, order_no }).then((result) => {
+        this.order_data = ''
+        localStorage.removeItem('order_data')
+        this.$message(result.message)
+      })
     }
   }
 }
@@ -155,5 +207,20 @@ export default {
   height: 59px;
   line-height: 52px;
   text-align: center;
+}
+.carsOrder {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(0, 0, 0, 0.76);
+  border-radius: 99px;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #fff;
+}
+.btn-G {
+  position: fixed;
+  top: 70px;
+  left: 30px;
 }
 </style>

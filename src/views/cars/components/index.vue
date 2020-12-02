@@ -167,7 +167,6 @@ export default {
         this.$router.push('/login')
         return false
       }
-      console.log(this.$store.state.account.accountToken)
       if (!this.cars_lease_currId) {
         this.$message('请选择租车类型')
         return false
@@ -176,11 +175,14 @@ export default {
         cars_id: this.carInfo.id,
         cars_lease_type_id: this.cars_lease_currId
       }
-
       CONFIRMCARS(requestdata)
         .then((result) => {
           const data = result.data
+          if (!data) {
+            this.$message.success(result.message)
+          }
           const key = Object.keys(data)
+          // 用户用车审核
           if (this.audit_user.includes(key[0])) {
             if (
               !data.check_real_name ||
@@ -259,7 +261,6 @@ export default {
     },
     /* 选择租赁类型 */
     carsleaseClick(data) {
-      console.log('carsleaseClick -> data', data)
       this.cars_lease_data = data
       this.cars_lease_currId = data.carsLeaseTypeId
     }

@@ -1,98 +1,98 @@
 <template>
-    <div class="user-container">
-        <Back column="安全设置" />
-        <div class="order-list">
-            <div class="item">
-                <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
-                    <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
-                    </div>
-                </div>
-                <p class="number">粤 B8X4B6</p>
-                <div class="clearfix">
-                    <div class="price pr arrow pull-left">
-                        <em>￥</em>
-                        <span>2000.00</span>
-                    </div>
-                    <div class="pull-right fs-18 lh-40">支付宝支付</div>
-                </div>
-            </div>
+  <div class="user-container">
+    <Back />
+    <div class="order-list">
+      <div class="item">
+        <div class="info">
+          <time class="flex-1">2020-11-11 12:00:00</time>
+          <div class="flex-1">
+            <span class="status color-wait">待取车</span>
+          </div>
         </div>
-        <section class="section-mode">
-            <header>
-                <h4 class="title">用车计费</h4>
-            </header>
-            <div class="content">
-                <ul class="links">
-                    <li>
-                        <span class="pull-left">起步价</span>
-                        <span class="pull-right s-12">￥12.90</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">时长费</span>
-                        <span class="pull-right s-12">￥12.90</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">里程费</span>
-                        <span class="pull-right s-12">￥12.90</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-        <section class="section-mode">
-            <header>
-                <h4 class="title">其他费用</h4>
-            </header>
-            <div class="content">
-                <ul class="links">
-                    <li>
-                        <span class="pull-left">全面保障服务费</span>
-                        <span class="pull-right s-12">￥0.00</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">还车服务费</span>
-                        <span class="pull-right s-12">￥0.00</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-        <section class="section-mode">
-            <header>
-                <h4 class="title">优惠减免</h4>
-            </header>
-            <div class="content">
-                <ul class="links">
-                    <li>
-                        <span class="pull-left">会员优惠</span>
-                        <span class="pull-right s-12">-￥0.00</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">活动优惠</span>
-                        <span class="pull-right s-12">-￥0.00</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">特权卡</span>
-                        <span class="pull-right s-12">-￥0.00</span>
-                    </li>
-                    <li>
-                        <span class="pull-left">用车券</span>
-                        <span class="pull-right s-12">-￥0.00</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
+        <p class="number">粤 B8X4B6</p>
+        <div class="clearfix">
+          <div class="price pr arrow pull-left">
+            <em>￥</em>
+            <span>2000.00</span>
+          </div>
+          <div class="pull-right fs-18 lh-40">支付宝支付</div>
+        </div>
+      </div>
     </div>
+    <section class="section-mode">
+      <header>
+        <h4 class="title">用车计费</h4>
+      </header>
+      <div class="content">
+        <ul class="links">
+          <li>
+            <span class="pull-left">起步价</span>
+            <span class="pull-right s-12">￥12.90</span>
+          </li>
+          <li>
+            <span class="pull-left">时长费</span>
+            <span class="pull-right s-12">￥12.90</span>
+          </li>
+          <li>
+            <span class="pull-left">里程费</span>
+            <span class="pull-right s-12">￥12.90</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="section-mode">
+      <header>
+        <h4 class="title">其他费用</h4>
+      </header>
+      <div class="content">
+        <ul class="links">
+          <li>
+            <span class="pull-left">全面保障服务费</span>
+            <span class="pull-right s-12">￥0.00</span>
+          </li>
+          <li>
+            <span class="pull-left">还车服务费</span>
+            <span class="pull-right s-12">￥0.00</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="section-mode">
+      <header>
+        <h4 class="title">优惠减免</h4>
+      </header>
+      <div class="content">
+        <ul class="links">
+          <li>
+            <span class="pull-left">会员优惠</span>
+            <span class="pull-right s-12">-￥0.00</span>
+          </li>
+          <li>
+            <span class="pull-left">活动优惠</span>
+            <span class="pull-right s-12">-￥0.00</span>
+          </li>
+          <li>
+            <span class="pull-left">特权卡</span>
+            <span class="pull-right s-12">-￥0.00</span>
+          </li>
+          <li>
+            <span class="pull-left">用车券</span>
+            <span class="pull-right s-12">-￥0.00</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
 </template>
 <script>
 export default {
-    name: "User",
-    components: {},
-    data(){
-        return {
-            img: require("@/assets/images/level-img.png")
-        }
+  name: 'User',
+  components: {},
+  data() {
+    return {
+      img: require('@/assets/images/level-img.png')
     }
+  }
 }
 </script>
 <style lang="scss">
@@ -140,7 +140,7 @@ export default {
         .status {
             float: right;
         }
-        
+
     }
     .number {
         font-size: 18px;
