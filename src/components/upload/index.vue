@@ -1,22 +1,17 @@
 <template>
-  <el-upload
-    class="avatar-uploader"
-    action="https://up-z2.qiniup.com"
-    :data="uploadData"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeAvatarUpload"
-  >
+  <el-upload class="avatar-uploader" action="https://up-z2.qiniup.com" :data="uploadData" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
     <img v-if="imageUrl" :src="imageUrl" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon" />
   </el-upload>
 </template>
 
 <script>
+import { GetQuiniuToken } from '@/api/account'
 export default {
   name: '',
   components: {},
-  props: { // 接收到的数据属于“静态数据”，是单向数据，不能反向修改
+  props: {
+    // 接收到的数据属于“静态数据”，是单向数据，不能反向修改
     imgUrl: {
       type: String,
       default: ''
@@ -40,7 +35,7 @@ export default {
     }
   },
   beforeMount() {
-    // this.requestFlag && this.getQiniuToken();
+    // this.getQiniuToken()
   },
   methods: {
     clear() {
@@ -49,11 +44,11 @@ export default {
     getQiniuToken() {
       // 在工作中，
       const requestData = {
-        ak: '5F2rCgyOj6l8_EvHLu5ENzWVtABbCe8iXs6IileX',
-        sk: 'h7z4Pw3jOjkW3OQqIG1CVxx3APkokt4IVctLg78n',
-        buckety: 'bigbigtime'
+        ak: 'V5y-8rIHXtKLJX4bjtROlNtydUxVsm8JMgMiS9w-',
+        sk: 'XB22VtWna_hNs_YvX6KMXiwbL3L7hEHVlEkHeUTT',
+        buckety: 'carstest-open'
       }
-      GetQiniuToken(requestData).then(response => {
+      GetQuiniuToken(requestData).then((response) => {
         const data = response.data
         if (data.token) {
           this.$store.commit('common/SET_UPLOAD_TOKEN', data.token)
@@ -61,7 +56,8 @@ export default {
       })
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = `http://qij9j2gxu.hn-bkt.clouddn.com/${res.key}`
+      console.log('🚀 ~ file: index.vue ~ line 59 ~ res', res)
+      this.imageUrl = `http://qj8zgc8uk.hn-bkt.clouddn.com/${res.key}`
       this.$emit('update:value', this.imageUrl)
     },
     // 上传之前

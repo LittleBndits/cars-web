@@ -16,6 +16,10 @@
       <router-link :to="{path:'/orderDetailed',query:{order_no:order_data.order_no}}" style="color:#fff">您有一个订单正在进行 </router-link>
     </div>
     <div v-if="order_data" class="btn-G">
+      <div v-if="order_data.order_status==='RETURN'" class="parkingList">
+        <label for="">请选择停车场：</label>
+        <el-button v-for="item in parkingIds" :key="item.id" size="mini" :type="item==parkingId?'primary':''" @click="checkparking(item)">{{ item }}</el-button>
+      </div>
       <el-button v-if="order_data.order_status==='WAIT'" type="primary" size="small" @click="carsget">取车</el-button>
       <el-button v-if="order_data.order_status==='WAIT'" type="danger" size="small" @click="carscancel">取消</el-button>
       <el-button v-if="order_data.order_status==='RETURN'" type="success" size="small" @click="carsreturn">还车</el-button>
@@ -30,7 +34,7 @@ import Navbar from '@c/Navbar'
 import Login from './login'
 // API
 import { GetParking } from '@/api/parking'
-import { GETCARSACTIVATION, CARSGET, CARSRETURN, CARSCANCEL } from '@/api/order'
+import { GETCARSACTIVATION, CARSGET, CARSRETURNS, CARSCANCEL } from '@/api/order'
 export default {
   name: 'Index',
   components: {
@@ -41,13 +45,17 @@ export default {
   },
   data() {
     return {
-      order_data: JSON.parse(localStorage.getItem('order_data'))
+      order_data: JSON.parse(localStorage.getItem('order_data')),
+      parkingId: ''
     }
   },
   computed: {
     show() {
       const rotuer = this.$route
       return rotuer.name !== 'Index'
+    },
+    parkingIds() {
+      return this.$store.state.common.parking_Ids
     }
   },
 
@@ -114,6 +122,8 @@ export default {
               key: 'parkingList',
               value: resData
             })
+          const parkingIds = resData.map((item) => item.id)
+          this.$store.commit('common/SET_PARKING_IDS', parkingIds)
         })
         .catch(() => {})
     },
@@ -163,9 +173,18 @@ export default {
       })
     },
     /* 还车 */
+    // carsreturn() {
+    //   const { cars_id, order_no } = this.order_data
+    //   CARSRETURN({ cars_id, order_no }).then((result) => {
+    //     this.order_data = null
+    //     localStorage.removeItem('order_data')
+    //     this.$message(result.message)
+    //   })
+    // },
+    /* 还车 -停车场 */
     carsreturn() {
       const { cars_id, order_no } = this.order_data
-      CARSRETURN({ cars_id, order_no }).then((result) => {
+      CARSRETURNS({ parking_id: this.parkingId, cars_id, order_no }).then((result) => {
         this.order_data = null
         localStorage.removeItem('order_data')
         this.$message(result.message)
@@ -179,6 +198,10 @@ export default {
         localStorage.removeItem('order_data')
         this.$message(result.message)
       })
+    },
+    /* 选择停车场-还车 */
+    checkparking(item) {
+      this.parkingId = item
     }
   }
 }
@@ -222,5 +245,8 @@ export default {
   position: fixed;
   top: 70px;
   left: 30px;
+}
+.parkingList{
+  margin-bottom: 10px;
 }
 </style>

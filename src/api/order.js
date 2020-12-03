@@ -64,6 +64,16 @@ export function CARSRETURN(data) {
   })
 }
 /*
+ * 还车
+ */
+export function CARSRETURNS(data) {
+  return service.request({
+    method: 'post',
+    url: `${process.env.VUE_APP_API_WEB}/carsReturnS/`,
+    data
+  })
+}
+/*
  * 取消
  */
 export function CARSCANCEL(data) {

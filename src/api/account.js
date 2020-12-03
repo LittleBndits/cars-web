@@ -43,3 +43,13 @@ export function Forget(data) {
   })
 }
 
+/**
+ *  获取七牛云 token
+ */
+export function GetQuiniuToken(data = {}) {
+  return service.request({
+    method: 'post',
+    url: `${process.env.VUE_APP_API_WEB}/uploadImgToken/`,
+    data
+  })
+}
